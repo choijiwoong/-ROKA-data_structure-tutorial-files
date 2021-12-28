@@ -1,4 +1,4 @@
-#ifdef __AB_STACK_H__
+#ifndef __AB_STACK_H__
 #define __AB_STACK_H__
 
 #define TRUE 1

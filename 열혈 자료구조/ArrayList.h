@@ -1,4 +1,4 @@
-#ifdef __ARRAY_LIST_H__
+#ifndef __ARRAY_LIST_H__
 #define __ARRAY_LIST_H__
 
 //mecro for expression of true, false

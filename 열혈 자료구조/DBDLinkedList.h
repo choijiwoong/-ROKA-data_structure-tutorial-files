@@ -1,4 +1,4 @@
-#ifdef _DBD_LINKED_LIST_H__
+#ifndef _DBD_LINKED_LIST_H__
 #define __DBD_LINKED_LIST_H__
 
 #define TRUE 1

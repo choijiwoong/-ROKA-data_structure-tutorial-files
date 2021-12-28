@@ -1,4 +1,4 @@
-#ifdef __POINT_H__
+#ifndef __POINT_H__
 #define __POINT_H__
 
 typedef struct _point//structure of point that is consisted by x, y position.
