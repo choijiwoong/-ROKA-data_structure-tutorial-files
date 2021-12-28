@@ -21,10 +21,10 @@ int main(){
 	}
 	
 	if(LFirst(&list, &data)){//remove even number
-		if(!data&1)//생각해보니...0번째는 2^0이라 숫자 그대로 나오지... 괜히 바꾸려다 틀릴뻔..데헷.. 
+		if(data&1)
 			LRemove(&list);
 		while(LNext(&list, &data))
-			if(!data&1)
+			if(data&1)
 				LRemove(&list);
 	}
 	
