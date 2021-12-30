@@ -3,11 +3,11 @@
 #include "BinaryTree.h"
 
 BTreeNode* MakeBTreeNode(void){
-	BTreeNode* nd=(BTreeNode*)malloc(sizeof(BTreeNode));//get root(first) node for making tree
+	BTreeNode* nd=(BTreeNode*)malloc(sizeof(BTreeNode));//get node for making tree. (not only root node)
 	nd->left=NULL;//default setting to NULL
 	nd->right=NULL;
 	
-	return nd;//return root Node's pointer
+	return nd;//return Node's pointer
 }
 
 BTData GetData(BTreeNode* bt){
@@ -35,4 +35,42 @@ void MakeRightDubTree(BTreeNode* main, BTreeNode* sub){
 		free(main->right);
 	
 	main->right=sub;
+}
+
+//For Delete
+void DeleteTree(BTree* bt){
+	if(bt==NULL)//recursive approach. we will use PostorderTraversal for free all node
+		return;
+		
+	DeleteTree(bt->left);
+	DeleteTree(bt->right);
+	printf("del tree data: %d\n", bt->data);
+	free(bt);
+}
+
+//For Traverse 
+//Sequence of handling data & call recursively defines sort of Traversal(Preorder, Inorder, Postorder)
+void PreorderTraverse(BTreeNode* bt, VisitFuncPtr action){
+	if(bt==NULL)//for stop action functor
+		return;
+	
+	action(bt->data);//do work first
+	PreorderTraverse(bt->left, action);//rescursive!
+	PreorderTraverse(bt->right, action);
+}
+void InorderTraverse(BTreeNode* bt, VisitFuncPtr action){
+	if(bt==NULL)
+		return;
+		
+	InorderTraverse(bt->left, action);
+	action(bt->data);//do work middle
+	InorderTraverse(bt->right, action);
+}
+void PostorderTraverse(BTreeNode* bt, VisitFuncPtr action){
+	if(bt==NULL)
+		return;
+		
+	PostorderTraverse(bt->left, action);
+	PostorderTraverse(bt->right, action);
+	action(bt->data);//do work last
 }
