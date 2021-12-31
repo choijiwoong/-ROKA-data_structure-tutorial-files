@@ -63,11 +63,47 @@ void ShowNodeData(int data){//functor for Traverse. In Traverse function, it wil
 }
 
 void ShowPrefixTypeExp(BTreeNode* bt){//tools only for show
-	PreorderTraverse(bt, ShowNodeData);
+	//PreorderTraverse(bt, ShowNodeData);
+	if(bt==NULL)
+		return;
+		
+	if(bt->left!=NULL || bt->right!=NULL)
+		printf("(");
+	
+	ShowNodeData(bt->data);
+	ShowPrefixTypeExp(bt->left);
+	ShowPrefixTypeExp(bt->right);
+	
+	if(bt->left!=NULL || bt->right!=NULL)
+		printf(")");
 }
-void ShowInfixTypeExp(BTreeNode* bt){
-	InorderTraverse(bt, ShowNodeData);
+void ShowInfixTypeExp(BTreeNode* bt){//make it consider bracket!
+	//InorderTraverse(bt, ShowNodeData);//previous version_without bracket.
+	if(bt==NULL)
+		return;
+	
+	if(bt->left!=NULL || bt->right!=NULL)//중위표기법을 이용하여 표기하는데, 연산자의 수와 소괄호 한 쌍의 수가 일치하기에 구현이 보다 편리하다. 
+		printf(" ( ");
+		
+	ShowInfixTypeExp(bt->left);//recursive. operand1
+	ShowNodeData(bt->data);//operation
+	ShowInfixTypeExp(bt->right);//operand2?
+	
+	if(bt->left!=NULL || bt->right!=NULL)
+		printf(" ) ");
 }
 void ShowPostfixTypeExp(BTreeNode* bt){
-	PostorderTraverse(bt, ShowNodeData);
+	//PostorderTraverse(bt, ShowNodeData);
+	if(bt==NULL)
+		return;
+		
+	if(bt->left!=NULL || bt->right!=NULL)
+		printf(" ( ");
+		
+	ShowPostfixTypeExp(bt->left);
+	ShowPostfixTypeExp(bt->right);
+	ShowNodeData(bt->data);
+	
+	if(bt->left!=NULL || bt->right!=NULL)
+		printf(")");
 }
