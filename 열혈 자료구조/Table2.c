@@ -41,7 +41,8 @@ Value TBLDelete(Table* pt, Key k){
 		}
 	}
 	
-	return NULL;
+	//return NULL;//반환되는 값이 NULL인지 0인지를 구별하기 위함. 물론 header에서 typedef Person * Value로 pointer형임을 명시하긴 했다. 
+	return FALSE;
 }
 
 Value TBLSearch(Table* pt, Key k){
@@ -59,5 +60,6 @@ Value TBLSearch(Table* pt, Key k){
 		}
 	}
 	
-	return NULL;
+	//return NULL;
+	return FALSE;
 }
