@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "Table.h"
 
-void TBLInit(Table* pt, HashFunc f){//initialization of status to EMPTY & register hashfunction
+void TBLInit(Table* pt, HashFunc f){//initialization of status to EMPTY & register hashfunction ¼öÁ¤ 
 	int i;
 	
 	for(i=0; i<MAX_TBL; i++)
@@ -21,7 +21,7 @@ void TBLInsert(Table* pt, Key k, Value v){
 Value TBLDelete(Table* pt, Key k){
 	int hv=pt->hf(v);
 	
-	if((pt->tbl[hv).staue!=INUSE){
+	if((pt->tbl[hv).status!=INUSE){
 		return NULL;
 	} else{
 		(pt->tbl[hv]).status=DELETED;
