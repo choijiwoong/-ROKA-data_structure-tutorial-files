@@ -78,7 +78,7 @@ void BFShowGraphVertex(ALGraph* pg, int startV){//Breadth First Search의 핵심은 
 	VisitVertex(pg, visitV);
 	
 	while(LFirst(&(pg->adjList[visitV]), &nextV)==TRUE){
-		if(VisitVertex(pg, nextV)==TRUE)//그치..visitV가 이렇게 고정되어있어야 하는거 아닌가... 
+		if(VisitVertex(pg, nextV)==TRUE)//whitout if, else, break. because it's BFS that saves all possible vertex.
 			Enqueue(&queue, nextV);
 		while(LNext(&(pg->adjList[visitV]), &nextV)==TRUE){
 			if(VisitVertex(pg, nextV)==TRUE)
@@ -88,7 +88,7 @@ void BFShowGraphVertex(ALGraph* pg, int startV){//Breadth First Search의 핵심은 
 		if(QIsEmpty(&queue)==TRUE)
 			break;
 		else
-			visitV=Dequeue(&queue);//마지막 dequeue를 하여 마지막 남은것까지 연락의 기회를 줘야끝나는 것이다. 
+			visitV=Dequeue(&queue);//Last element of queue is dequeued for giving change for contect. and then, truly done.
 	}
 	
 	memset(pg->visitInfo, 0, sizeof(int)*pg->numV);

@@ -79,33 +79,29 @@ void DFShowGraphVertex(ALGraph* pg, int startV){//show at startV(enum)
 	VisitVertex(pg, visitV);//visit work with set TRUE visitInfo. visit visitV first.
 	int nextV;
 	
-	while(LFirst(&(pg->adjList[visitV]), &nextV)==TRUE){//visitV에 해당하는 리스트의 첫 항목을 nextV에 저장 
-		int visitFlag=FALSE;//1. 스타트 vertex의 첫 리스트 항목을 next에 저장 
+	while(LFirst(&(pg->adjList[visitV]), &nextV)==TRUE){
+		int visitFlag=FALSE;
 		
-		if(VisitVertex(pg, nextV)==TRUE){//방문에 시도하고 성공한다면 
-			SPush(&stack, visitV);//자취를 stack에 push 
-			visitV=nextV;//방문 완료된 항목을 visitV에 저장 for next element접근 
-			//2. 1의 항목을 visitV에 저장. visitV는 방문할 vertex를 가리킴. 즉 스타트 리스트의 첫 항목을 다음 방문할 vertex로 저장 
-			//sol2) visitV는 다음에 노드에 접근되면 기존의 노드(vertex)를 지나갔다고 스택에 push할 목적이 전부임.
-			//고로 지금 visitV를 현재 우리가 방문한 노드로 담고 다음 접근때 접근이 성공한다면 그때 visitV를 Push하는거지! 
+		if(VisitVertex(pg, nextV)==TRUE){//try visit and if Success, push to stack for tracing, save current Vertex in visitV
+			SPush(&stack, visitV);
+			visitV=nextV;
 			visitFlag=TRUE;//flag set for after handling
-		} else{//sol1) 방문에 성공하지 못했다면!!! visitV가 next로 세팅되지 않음!! 고로 아래에서 계속 다음 항목 접근 시도함. 
-			while(LNext(&(pg->adjList[visitV]), &nextV)==TRUE){//다음 항목을 nextV에 저장 
-			//3. 2의 리스트에서 다음 항목을 nextV에 저장. 계속 방문 시도? 
-				if(VisitVertex(pg, nextV)==TRUE){//이상의 과정 반복 
+		} else{//we have to focus on it's if~else condition. if_true, else_false. if_false, else_true. do not confuse on visitV
+			while(LNext(&(pg->adjList[visitV]), &nextV)==TRUE){
+				if(VisitVertex(pg, nextV)==TRUE){
 					SPush(&stack, visitV);
-					visitV=nextV;
+					visitV=nextV;//we don't use visitV in this code. it's just for extension.
 					visitFlag=TRUE;
-					break;
+					break;//if visit success, break for eacaping
 				}
 			}
 		}
 		
 		if(visitFlag==FALSE){//방문안했는데 
-			if(SIsEmpty(&stack)==TRUE)//스택도 비어있다 그럼 break 
+			if(SIsEmpty(&stack)==TRUE)//done without extra pop
 				break;
-			else//스택에 뭐 있으면 pop하여 연락의 기회 준다. 
-				visitV=SPop(&stack);
+			else
+				visitV=SPop(&stack);//giva a change for contect
 		}
 	}
 	memset(pg->visitInfo, 0, sizeof(int)*pg->numV);//다음 사용을 위하여 
